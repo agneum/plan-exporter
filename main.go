@@ -24,6 +24,7 @@ func main() {
 		}
 
 		if !isScanningMode {
+			fmt.Println(text)
 			continue
 		}
 
