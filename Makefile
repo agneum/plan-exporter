@@ -9,6 +9,12 @@ BUILD_TIME?=$(shell date -u '+%Y%m%d-%H%M')
 COMMIT?=$(shell git rev-parse HEAD)
 BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
 
+# Set up GOPATH if not defined
+ifndef $(GOPATH)
+    GOPATH=$(shell go env GOPATH)
+    export GOPATH
+endif
+
 # Symlink into GOPATH
 BUILD_DIR=${GOPATH}/${BINARY}
 
@@ -27,7 +33,7 @@ all: clean build
 
 # Install the linter to $GOPATH/bin which is expected to be in $PATH
 install-lint:
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.22.2
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${GOPATH}/bin v1.23.8
 
 run-lint:
 	golangci-lint --config .golangci.yml run
