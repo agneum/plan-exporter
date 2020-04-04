@@ -1,56 +1,29 @@
 package main
 
 import (
-	"bufio"
+	"context"
+	"flag"
 	"fmt"
 	"log"
 	"os"
-	"strings"
+
+	"github.com/agneum/plan-exporter/pgscanner"
+	"github.com/agneum/plan-exporter/visualizer"
+
 )
 
-const QueryPlanSubstringDetector = "QUERY PLAN"
-
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
+	var target = flag.String("target", "dalibo", "type of an explain visualizer to export")
+	flag.Parse()
 
-	explainLines := []string{}
-	isScanningMode := false
-
-	for scanner.Scan() {
-		text := scanner.Text()
-
-		if strings.Contains(text, QueryPlanSubstringDetector) {
-			isScanningMode = true
-		}
-
-		if !isScanningMode {
-			fmt.Println(text)
-			continue
-		}
-
-		if text == "" {
-			isScanningMode = false
-
-			if len(explainLines) < 2 {
-				log.Printf("Not enough lines in plan to post.")
-				continue
-			}
-
-			plan := strings.Join(explainLines[2:len(explainLines)-1], "\n")
-
-			explainLines = []string{}
-			url, err := postToDalibo(plan)
-			if err != nil {
-				log.Printf("Failed to post query plan: %s.", err)
-				continue
-			}
-
-			fmt.Printf("The plan has been posted successfully.\nURL: %s", url)
-			continue
-		}
-
-		explainLines = append(explainLines, text)
+	ctx := context.Background()
+	planner, err := visualizer.New(*target)
+	if err != nil {
+		log.Fatalf("failed to init a query plan exporter: %v", err)
 	}
 
-	fmt.Println("Welcome to the query sender.")
+	fmt.Printf("Welcome to the query plan exporter. Target: %s.\n", *target)
+
+	pgsc := pgscanner.New(os.Stdin, os.Stdout, planner)
+	pgsc.Run(ctx)
 }

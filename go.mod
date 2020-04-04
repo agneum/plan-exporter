@@ -1,8 +1,5 @@
-module github.com/agneum/plan-sender
+module github.com/agneum/plan-exporter
 
-go 1.13
+go 1.14
 
-require (
-	github.com/PuerkitoBio/goquery v1.5.1
-	github.com/pkg/errors v0.9.1
-)
+require github.com/PuerkitoBio/goquery v1.5.1

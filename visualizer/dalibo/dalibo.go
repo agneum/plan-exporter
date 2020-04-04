@@ -1,23 +1,30 @@
-package main
+package dalibo
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/pkg/errors"
 )
+
+const VisualizerType = "dalibo"
 
 const daliboURL = "https://explain.dalibo.com"
 
-func postToDalibo(plan string) (string, error) {
-	fmt.Println("Posting to the Dalibo visualizer...")
+type Dalibo struct {
+}
 
+func New() *Dalibo {
+	return &Dalibo{}
+}
+
+func (d *Dalibo) Export(plan string) (string, error) {
 	response, err := makeRequest(plan)
 	if err != nil {
-		return "", errors.Wrap(err, "failed to make a request")
+		return "", fmt.Errorf("failed to make a request: %w", err)
 	}
 
 	if response.Body != nil {
@@ -27,15 +34,17 @@ func postToDalibo(plan string) (string, error) {
 	// Load the HTML document.
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
-		return "", errors.Wrap(err, "failed to load the HTML document")
+		return "", fmt.Errorf("failed to load the HTML document: %w", err)
 	}
+
+	const titleCount = 2
 
 	// Find the plan ID.
 	pageTitle := doc.Find("title").Text()
 	pageTitle = strings.TrimLeft(strings.Join(strings.Fields(pageTitle), ""), "Plan")
-	titleParts := strings.SplitN(pageTitle, "|", 2)
+	titleParts := strings.SplitN(pageTitle, "|", titleCount)
 
-	if len(titleParts) < 2 {
+	if len(titleParts) < titleCount {
 		return "", errors.New("failed to parse a plan ID")
 	}
 
@@ -48,7 +57,7 @@ func makeRequest(plan string) (*http.Response, error) {
 
 	response, err := http.PostForm(fmt.Sprintf("%s/new", daliboURL), formVal)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to post form")
+		return nil, fmt.Errorf("failed to post form: %w", err)
 	}
 
 	return response, nil
