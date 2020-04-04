@@ -1,4 +1,4 @@
-name: Go
+name: build
 
 on:
   push:
@@ -26,9 +26,13 @@ jobs:
       run: |
         go get -v -t -d ./...
 
-    - name: Run linter
+    - name: Install golangci-lint
       run: |
-        make lint
+        make install-lint
+        echo ::add-path::$(go env GOPATH)/bin
+
+    - name: Run golangci-lint
+      run: make run-lint
 
     - name: Build
       run: go build -v .
