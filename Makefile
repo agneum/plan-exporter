@@ -30,7 +30,7 @@ install-lint:
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.22.2
 
 run-lint:
-	golangci-lint run
+	golangci-lint --config .golangci.yml run
 
 lint: install-lint run-lint
 
