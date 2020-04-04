@@ -1,3 +1,7 @@
+[![Build Status](https://github.com/agneum/plan-exporter/workflows/build/badge.svg)](https://github.com/agneum/plan-exporter/actions)
+[![License](https://img.shields.io/github/license/agneum/plan-exporter)](/LICENSE)
+[![Go Report](https://goreportcard.com/badge/github.com/agneum/plan-exporter)](https://goreportcard.com/badge/github.com/agneum/plan-exporter)
+
 ## Query plan exporter for `psql`
 
 The utility receives Postgres Query Plans and sends them to a visualizer for sharing. 
