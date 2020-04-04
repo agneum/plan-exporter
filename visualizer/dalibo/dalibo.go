@@ -23,7 +23,7 @@ func New() *Dalibo {
 	return &Dalibo{}
 }
 
-//  Export posts plan to a visualizer and returns link to the visualization plan page.
+// Export posts plan to a visualizer and returns link to the visualization plan page.
 func (d *Dalibo) Export(plan string) (string, error) {
 	formVal := url.Values{client.PlanKey: []string{plan}}
 

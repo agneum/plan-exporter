@@ -23,7 +23,7 @@ func New() *Depesz {
 	return &Depesz{}
 }
 
-//  Export posts plan to a visualizer and returns link to the visualization plan page.
+// Export posts plan to a visualizer and returns link to the visualization plan page.
 func (d *Depesz) Export(plan string) (string, error) {
 	formVal := url.Values{client.PlanKey: []string{plan}}
 

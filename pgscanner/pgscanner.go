@@ -13,6 +13,9 @@ import (
 // QueryPlanSubstringDetector defines the label for query plan output.
 const QueryPlanSubstringDetector = "QUERY PLAN"
 
+// minimalQueryPlanLines defines minimal lines to post a query plan.
+const minimalQueryPlanLines = 2
+
 // PlanExporter defines the interface to post query plans.
 type PlanExporter interface {
 	Export(string) (string, error)
@@ -58,7 +61,7 @@ func (s *PgScanner) Run(ctx context.Context) {
 		if text == "" {
 			isScanningMode = false
 
-			if len(explainLines) < 2 {
+			if len(explainLines) < minimalQueryPlanLines {
 				log.Printf("Not enough lines in plan to post.")
 				continue
 			}
@@ -76,6 +79,7 @@ func (s *PgScanner) Run(ctx context.Context) {
 			}
 
 			_, _ = fmt.Fprintf(s.writer, "The plan has been posted successfully.\nURL: %s", url)
+
 			continue
 		}
 

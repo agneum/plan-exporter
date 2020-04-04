@@ -12,7 +12,7 @@ const PlanKey = "plan"
 
 // MakeRequest performs the request and returns the redirected request URL.
 func MakeRequest(targetURL string, formVal url.Values) (string, error) {
-	response, err := http.PostForm(targetURL, formVal)
+	response, err := http.PostForm(targetURL, formVal) // nolint:gosec
 	if err != nil {
 		return "", fmt.Errorf("failed to post form: %w", err)
 	}
