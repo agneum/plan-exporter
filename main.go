@@ -9,14 +9,14 @@ import (
 
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer"
-
 )
 
 func main() {
-	var target = flag.String("target", "dalibo", "type of an explain visualizer to export")
+	var target = flag.String("target", "depesz", "type of an explain visualizer to export")
 	flag.Parse()
 
 	ctx := context.Background()
+
 	planner, err := visualizer.New(*target)
 	if err != nil {
 		log.Fatalf("failed to init a query plan exporter: %v", err)

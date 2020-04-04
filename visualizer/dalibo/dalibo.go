@@ -1,64 +1,36 @@
+// Package dalibo provides a query plan exporter for the Dalibo visualizer.
 package dalibo
 
 import (
-	"errors"
 	"fmt"
-	"net/http"
 	"net/url"
-	"strings"
 
-	"github.com/PuerkitoBio/goquery"
+	"github.com/agneum/plan-exporter/client"
 )
 
-const VisualizerType = "dalibo"
+// visualizer constants
+const (
+	VisualizerType = "dalibo"
+	postURL        = "https://explain.dalibo.com/new"
+)
 
-const daliboURL = "https://explain.dalibo.com"
-
+// Dalibo defines a query plan exporter for the Dalibo visualizer.
 type Dalibo struct {
 }
 
+// New creates a new Dalibo exporter.
 func New() *Dalibo {
 	return &Dalibo{}
 }
 
+//  Export posts plan to a visualizer and returns link to the visualization plan page.
 func (d *Dalibo) Export(plan string) (string, error) {
-	response, err := makeRequest(plan)
+	formVal := url.Values{client.PlanKey: []string{plan}}
+
+	explainURL, err := client.MakeRequest(postURL, formVal)
 	if err != nil {
 		return "", fmt.Errorf("failed to make a request: %w", err)
 	}
 
-	if response.Body != nil {
-		defer response.Body.Close()
-	}
-
-	// Load the HTML document.
-	doc, err := goquery.NewDocumentFromReader(response.Body)
-	if err != nil {
-		return "", fmt.Errorf("failed to load the HTML document: %w", err)
-	}
-
-	const titleCount = 2
-
-	// Find the plan ID.
-	pageTitle := doc.Find("title").Text()
-	pageTitle = strings.TrimLeft(strings.Join(strings.Fields(pageTitle), ""), "Plan")
-	titleParts := strings.SplitN(pageTitle, "|", titleCount)
-
-	if len(titleParts) < titleCount {
-		return "", errors.New("failed to parse a plan ID")
-	}
-
-	return fmt.Sprintf("%s/plan/%s", daliboURL, titleParts[0]), nil
-}
-
-func makeRequest(plan string) (*http.Response, error) {
-	formVal := url.Values{}
-	formVal.Add("plan", plan)
-
-	response, err := http.PostForm(fmt.Sprintf("%s/new", daliboURL), formVal)
-	if err != nil {
-		return nil, fmt.Errorf("failed to post form: %w", err)
-	}
-
-	return response, nil
+	return explainURL, nil
 }

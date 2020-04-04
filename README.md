@@ -23,9 +23,9 @@ go install github.com/agneum/plan-exporter
 * Run explain to post the plan to visualizer and get a link.
     ```
     postgres=# explain select 1;
-    postgres=# Posting to Dalibo...
+    postgres=# Posting to visualizer...
     The plan has been posted successfully.
-    URL: https://explain.dalibo.com/plan/XXX
+    URL: https://explain.depesz.com/s/XXX
     postgres=#
     ```
   
@@ -33,5 +33,6 @@ go install github.com/agneum/plan-exporter
 
 - `--target` - (string, required) - defines a visualizer to export query plans. 
   Available targets:
-  - `dalibo` - https://explain.dalibo.com [default]
+  - `depesz` - https://explain.depesz.com [default]
+  - `dalibo` - https://explain.dalibo.com
 

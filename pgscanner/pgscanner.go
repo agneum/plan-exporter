@@ -1,3 +1,4 @@
+// Package pgscanner provides a scanner of psql output.
 package pgscanner
 
 import (
@@ -9,22 +10,27 @@ import (
 	"strings"
 )
 
+// QueryPlanSubstringDetector defines the label for query plan output.
 const QueryPlanSubstringDetector = "QUERY PLAN"
 
+// PlanExporter defines the interface to post query plans.
 type PlanExporter interface {
 	Export(string) (string, error)
 }
 
+// PgScanner provides a psql output scanner.
 type PgScanner struct {
 	reader       io.Reader
 	writer       io.Writer
 	planExporter PlanExporter
 }
 
+// New creates a new Postgres scanner.
 func New(reader io.Reader, writer io.Writer, planExporter PlanExporter) *PgScanner {
 	return &PgScanner{reader: reader, writer: writer, planExporter: planExporter}
 }
 
+// Run starts the Postgres scanner.
 func (s *PgScanner) Run(ctx context.Context) {
 	scanner := bufio.NewScanner(s.reader)
 
@@ -59,7 +65,7 @@ func (s *PgScanner) Run(ctx context.Context) {
 
 			plan := strings.Join(explainLines[2:len(explainLines)-1], "\n")
 
-			fmt.Fprintln(s.writer, "Posting to the visualizer...")
+			_, _ = fmt.Fprintln(s.writer, "Posting to the visualizer...")
 
 			explainLines = []string{}
 
@@ -69,7 +75,7 @@ func (s *PgScanner) Run(ctx context.Context) {
 				continue
 			}
 
-			fmt.Fprintf(s.writer, "The plan has been posted successfully.\nURL: %s", url)
+			_, _ = fmt.Fprintf(s.writer, "The plan has been posted successfully.\nURL: %s", url)
 			continue
 		}
 
