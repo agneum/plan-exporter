@@ -35,7 +35,7 @@ go install github.com/agneum/plan-exporter
   
 ### Options
 
-- `--target` - (string, required) - defines a visualizer to export query plans. 
+- `--target` - (string, optional) - defines a visualizer to export query plans. 
   Available targets:
   - `depesz` - https://explain.depesz.com [default]
   - `dalibo` - https://explain.dalibo.com

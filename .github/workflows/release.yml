@@ -1,0 +1,32 @@
+name: Release
+on:
+  push:
+    branches:
+#      - "!*"
+      - "test-release"
+#    tags:
+#      - v*.*.*
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: goreleaser
+    steps:
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.14
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Get dependencies
+        run: |
+          go get -v -t -d ./...
+
+      - name: goreleaser
+        uses: goreleaser/goreleaser-action@master
+        with:
+          args: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
