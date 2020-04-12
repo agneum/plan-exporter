@@ -27,6 +27,8 @@ LDFLAGS = -ldflags "-s -w \
 
 # Go tooling command aliases
 GOBUILD = GO111MODULE=on CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build ${LDFLAGS}
+GOTEST = GO111MODULE=on go test
+GORUN = GO111MODULE=on go run ${LDFLAGS}
 
 # Build the project
 all: clean build
@@ -47,7 +49,13 @@ clean:
 	-rm -f bin/*
 
 run:
-	go run ${LDFLAGS} ./cmd/joe/main.go
+	${GORUN} ./cmd/joe/main.go
 
-.PHONY: all clean build lint run-lint install-lint
+test:
+	${GOTEST} -v ./...
+
+test-race:
+	${GOTEST} -v -race ./...
+
+.PHONY: all clean build lint run-lint install-lint test test-race
 

@@ -21,15 +21,42 @@ go install github.com/agneum/plan-exporter
 
 ## Usage
 
-* Run `psql`
-* Set up output to the query plan exporter:
+1. Run `psql`
+
+1. Set up output to the query plan exporter:
     ```bash
     postgres=# \o | plan-exporter
     ```
-* Run explain to post the plan to visualizer and get a link.
+
+1. Run the explain query:
     ```bash
     postgres=# explain select 1;
+    postgres=# 
+                          QUERY PLAN                      
+    ------------------------------------------------------
+     Seq Scan on hypo  (cost=0.00..180.00 rows=1 width=0)
+       Filter: (id = 1)
+    (2 rows)
+    
+    Do you want to post this plan to the visualizer?
+    Send '\qecho Y' to confirm
+
+
     postgres=# Posting to visualizer...
+    The plan has been posted successfully.
+    URL: https://explain.depesz.com/s/XXX
+    postgres=#
+    ```
+1. Confirm of posting the plan to the visualizer: `\qecho Y`
+
+    ```bash
+    postgres=# \qecho Y
+    postgres=# Posting to the visualizer...
+    ```
+
+    That's it! Receive the link!
+
+    ```bash
     The plan has been posted successfully.
     URL: https://explain.depesz.com/s/XXX
     postgres=#
