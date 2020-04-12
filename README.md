@@ -40,13 +40,8 @@ go install github.com/agneum/plan-exporter
     
     Do you want to post this plan to the visualizer?
     Send '\qecho Y' to confirm
-
-
-    postgres=# Posting to visualizer...
-    The plan has been posted successfully.
-    URL: https://explain.depesz.com/s/XXX
-    postgres=#
     ```
+
 1. Confirm of posting the plan to the visualizer: `\qecho Y`
 
     ```bash
