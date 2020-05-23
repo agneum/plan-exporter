@@ -9,15 +9,26 @@ It will compute and highlight the most important information to make them easier
 
 ## Installation
 
-### Binary
+#### Precompiled binary
 It's highly recommended installing a specific version of the `plan-exporter` available on the [releases page](https://github.com/agneum/plan-exporter/releases).
 
-### Go
+To download and decompress the binary, use an example:
+
+```bash
+wget https://github.com/agneum/plan-exporter/releases/download/v0.0.3/plan-exporter-0.0.3-linux-amd64.tar.gz
+tar -zxvf plan-exporter-0.0.3-linux-amd64.tar.gz
+sudo mv plan-exporter /usr/local/bin/
+```
+
+#### Build from sources
 Version `1.13+` is required.
 
 ``` 
+git clone git@github.com:agneum/plan-exporter.git
+cd plan-exporter
 go install github.com/agneum/plan-exporter
 ```
+On default, make install puts the compiled binary in `go/bin`.
 
 ## Usage
 
@@ -28,7 +39,7 @@ go install github.com/agneum/plan-exporter
     postgres=# \o | plan-exporter
     ```
 
-1. Run the explain query:
+1. Run explain query:
     ```bash
     postgres=# explain select 1;
     postgres=# 
