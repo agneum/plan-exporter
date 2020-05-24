@@ -17,7 +17,8 @@ To download and decompress the binary, use an example:
 ```bash
 wget https://github.com/agneum/plan-exporter/releases/download/v0.0.3/plan-exporter-0.0.3-linux-amd64.tar.gz
 tar -zxvf plan-exporter-0.0.3-linux-amd64.tar.gz
-sudo mv plan-exporter /usr/local/bin/
+sudo mv plan-exporter-*/plan-exporter /usr/local/bin/
+rm -rf ./plan-exporter-*
 ```
 
 #### Build from sources
