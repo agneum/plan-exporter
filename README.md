@@ -9,10 +9,10 @@ It will compute and highlight the most important information to make them easier
 
 ## Installation
 
-#### Precompiled binary
+#### Precompiled binary (Linux)
 It's highly recommended installing a specific version of the `plan-exporter` available on the [releases page](https://github.com/agneum/plan-exporter/releases).
 
-To download and decompress the binary, use an example:
+To quickly install the tool on Linux, download and decompress the binary, use an example:
 
 ```bash
 wget https://github.com/agneum/plan-exporter/releases/download/v0.0.3/plan-exporter-0.0.3-linux-amd64.tar.gz
