@@ -11,7 +11,7 @@ import (
 // visualizer constants
 const (
 	VisualizerType = "dalibo"
-	postURL        = "https://explain.dalibo.com/new"	
+	postURL        = "https://explain.dalibo.com/new"
 	planKey        = "plan"
 )
 
