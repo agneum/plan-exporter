@@ -7,6 +7,7 @@ import (
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer/dalibo"
 	"github.com/agneum/plan-exporter/visualizer/depesz"
+	"github.com/agneum/plan-exporter/visualizer/tensor"
 )
 
 // New creates a new query plan exporter by visualizer type.
@@ -17,6 +18,9 @@ func New(visualizer string) (pgscanner.PlanExporter, error) {
 
 	case depesz.VisualizerType:
 		return depesz.New(), nil
+
+	case tensor.VisualizerType:
+		return tensor.New(), nil
 	}
 
 	return nil, fmt.Errorf("unknown visualizer given %q", visualizer)
