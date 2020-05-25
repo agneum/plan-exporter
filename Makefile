@@ -43,13 +43,13 @@ run-lint:
 lint: install-lint run-lint
 
 build:
-	${GOBUILD} -o bin/${BINARY} ./cmd/joe/main.go
+	${GOBUILD} -o bin/${BINARY} ./main.go
 
 clean:
 	-rm -f bin/*
 
 run:
-	${GORUN} ./cmd/joe/main.go
+	${GORUN} ./main.go
 
 test:
 	${GOTEST} -v ./...
