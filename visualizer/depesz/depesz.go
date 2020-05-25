@@ -12,6 +12,7 @@ import (
 const (
 	VisualizerType = "depesz"
 	visualizerURL  = "https://explain.depesz.com/"
+	planKey        = "plan"
 )
 
 // Depesz defines a query plan exporter for the Depesz visualizer.
@@ -25,7 +26,7 @@ func New() *Depesz {
 
 // Export posts plan to a visualizer and returns link to the visualization plan page.
 func (d *Depesz) Export(plan string) (string, error) {
-	formVal := url.Values{client.PlanKey: []string{plan}}
+	formVal := url.Values{planKey: []string{plan}}
 
 	explainURL, err := client.MakeRequest(visualizerURL, formVal)
 	if err != nil {
