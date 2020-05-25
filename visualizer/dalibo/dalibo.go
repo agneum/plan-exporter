@@ -12,6 +12,7 @@ import (
 const (
 	VisualizerType = "dalibo"
 	postURL        = "https://explain.dalibo.com/new"
+  PlanKey        = "plan"
 )
 
 // Dalibo defines a query plan exporter for the Dalibo visualizer.
@@ -25,7 +26,7 @@ func New() *Dalibo {
 
 // Export posts plan to a visualizer and returns link to the visualization plan page.
 func (d *Dalibo) Export(plan string) (string, error) {
-	formVal := url.Values{client.PlanKey: []string{plan}}
+	formVal := url.Values{PlanKey: []string{plan}}
 
 	explainURL, err := client.MakeRequest(postURL, formVal)
 	if err != nil {

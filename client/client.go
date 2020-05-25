@@ -7,9 +7,6 @@ import (
 	"net/url"
 )
 
-// PlanKey defines the form key in a request for a query plan.
-const PlanKey = "plan"
-
 // MakeRequest performs the request and returns the redirected request URL.
 func MakeRequest(targetURL string, formVal url.Values) (string, error) {
 	response, err := http.PostForm(targetURL, formVal) // nolint:gosec
