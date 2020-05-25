@@ -39,6 +39,7 @@ On default, make install puts the compiled binary in `go/bin`.
     ```bash
     postgres=# \o | plan-exporter
     ```
+    * You may wish to specify `--target [dalibo|depesz|tensor]` to customize your visualizer
 
 1. Run explain query:
     ```bash
@@ -75,6 +76,7 @@ On default, make install puts the compiled binary in `go/bin`.
   Available targets:
   - `depesz` - https://explain.depesz.com [default]
   - `dalibo` - https://explain.dalibo.com
+  - `tensor` - https://explain.tensor.ru
 
 ## Contact Information
 
