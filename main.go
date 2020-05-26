@@ -13,11 +13,13 @@ import (
 
 func main() {
 	target := flag.String("target", "depesz", "type of an explain visualizer to export")
+	url := flag.String("post_url", "", "Absolute URL to HTML <form> element's `action`")
+	key := flag.String("plan_key", "", "`name` of HTML <textarea> element where query plan gets pasted")
 
 	flag.Parse()
 
 	ctx := context.Background()
-	planner, err := visualizer.New(*target)
+	planner, err := visualizer.New(*target, *url, *key)
 
 	if err != nil {
 		log.Fatalf("failed to init a query plan exporter: %v", err)

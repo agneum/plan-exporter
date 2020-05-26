@@ -28,8 +28,18 @@ func (v *Visualizer) Export(plan string) (string, error) {
 }
 
 // New creates a new query plan exporter
-func New(visualizer string) (pgscanner.PlanExporter, error) {
+func New(visualizer string, url string, key string) (pgscanner.PlanExporter, error) {
 	switch visualizer {
+	case "custom":
+		if url == "" || key == "" {
+			return nil, fmt.Errorf("both plan_url and plan_key must be provided for custom targets")
+		}
+
+		return &Visualizer{
+			postURL: url,
+			planKey: key,
+		}, nil
+
 	case "dalibo":
 		return &Visualizer{
 			postURL: "https://explain.dalibo.com/new",
