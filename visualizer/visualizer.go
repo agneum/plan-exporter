@@ -42,7 +42,7 @@ func New(visualizer string) (pgscanner.PlanExporter, error) {
 			planKey: "explain",
 		}, nil
 
-	default: //depesz
+	case "depesz":
 		return &Visualizer{
 			postURL: "https://explain.depesz.com/",
 			planKey: "plan",
