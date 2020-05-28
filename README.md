@@ -40,7 +40,7 @@ On default, make install puts the compiled binary in `go/bin`.
     postgres=# \o | plan-exporter
     ```
     * You may wish to specify `--target [dalibo|depesz|tensor]` to customize your visualizer
-    * You may also specify `--target custom --post_url <URL> --plan_key <name>` to use any other visualizer of your choosing
+    * You may also specify `--post_url <URL>` if you are deploying one of these targets locally
 
 1. Run explain query:
     ```bash
@@ -78,9 +78,7 @@ On default, make install puts the compiled binary in `go/bin`.
   - `depesz` - https://explain.depesz.com [default]
   - `dalibo` - https://explain.dalibo.com
   - `tensor` - https://explain.tensor.ru
-  - `custom` - Any visualizer that you wish to use.  If using a `custom` target, you will need to provdie the following:
-    - `--post_url` - The absolute URL to which the `<form>` will `POST` to.  A good reference would be to look for the `action` param in the `<form>` tag.  Note that `plan-exporter` only works with visualizers supporting HTTP `POST` at this time.
-    - `--plan_key` - The `name` of the `<textarea>` (or other input) element into which the query plan gets pasted
+- `--post_url` - The absolute URL to which the `<form>` will `POST` to.  A good reference would be to look for the `action` param in the `<form>` tag.
 
 ## Contact Information
 
