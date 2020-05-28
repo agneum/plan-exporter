@@ -9,54 +9,17 @@ import (
 	"github.com/agneum/plan-exporter/pgscanner"
 )
 
-// Visualizer consists of a URL for HTTP POST call, along with HTML element name
-type Visualizer struct {
-	postURL string
-	planKey string
-}
-
-// Export posts plan to a visualizer and returns link to the visualization plan page.
-func (v *Visualizer) Export(plan string) (string, error) {
-	formVal := url.Values{v.planKey: []string{plan}}
-
-	explainURL, err := client.MakeRequest(v.postURL, formVal)
-	if err != nil {
-		return "", fmt.Errorf("failed to make a request: %w", err)
-	}
-
-	return explainURL, nil
-}
-
-// New creates a new query plan exporter
-func New(visualizer string, url string, key string) (pgscanner.PlanExporter, error) {
+// New creates a new query plan exporter by visualizer type.
+func New(visualizer string, url string) (pgscanner.PlanExporter, error) {
 	switch visualizer {
-	case "custom":
-		if url == "" || key == "" {
-			return nil, fmt.Errorf("both plan_url and plan_key must be provided for custom targets")
-		}
+	case dalibo.VisualizerType:
+		return dalibo.New(url), nil
 
-		return &Visualizer{
-			postURL: url,
-			planKey: key,
-		}, nil
+	case depesz.VisualizerType:
+		return depesz.New(url), nil
 
-	case "dalibo":
-		return &Visualizer{
-			postURL: "https://explain.dalibo.com/new",
-			planKey: "plan",
-		}, nil
-
-	case "tensor":
-		return &Visualizer{
-			postURL: "https://explain.tensor.ru/explain",
-			planKey: "explain",
-		}, nil
-
-	case "depesz":
-		return &Visualizer{
-			postURL: "https://explain.depesz.com/",
-			planKey: "plan",
-		}, nil
+	case tensor.VisualizerType:
+		return tensor.New(url), nil
 	}
 
 	return nil, fmt.Errorf("unknown visualizer given %q", visualizer)
