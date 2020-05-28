@@ -3,10 +3,11 @@ package visualizer
 
 import (
 	"fmt"
-	"net/url"
 
-	"github.com/agneum/plan-exporter/client"
 	"github.com/agneum/plan-exporter/pgscanner"
+	"github.com/agneum/plan-exporter/visualizer/dalibo"
+	"github.com/agneum/plan-exporter/visualizer/depesz"
+	"github.com/agneum/plan-exporter/visualizer/tensor"
 )
 
 // New creates a new query plan exporter by visualizer type.
