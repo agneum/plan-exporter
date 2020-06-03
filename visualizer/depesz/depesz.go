@@ -21,12 +21,12 @@ type Depesz struct {
 }
 
 // New creates a new Depesz exporter.
-func New(url string) *Depesz {
-	if url == "" {
-		url = defaultPostURL
+func New(postURL string) *Depesz {
+	if postURL == "" {
+		postURL = defaultPostURL
 	}
 
-	return &Depesz{postURL: url}
+	return &Depesz{postURL: postURL}
 }
 
 // Export posts plan to a visualizer and returns link to the visualization plan page.

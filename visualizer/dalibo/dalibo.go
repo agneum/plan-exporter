@@ -21,12 +21,12 @@ type Dalibo struct {
 }
 
 // New creates a new Dalibo exporter.
-func New(url string) *Dalibo {
-	if url == "" {
-		url = defaultPostURL
+func New(postURL string) *Dalibo {
+	if postURL == "" {
+		postURL = defaultPostURL
 	}
 
-	return &Dalibo{postURL: url}
+	return &Dalibo{postURL: postURL}
 }
 
 // Export posts plan to a visualizer and returns link to the visualization plan page.

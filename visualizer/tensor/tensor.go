@@ -21,12 +21,12 @@ type Tensor struct {
 }
 
 // New creates a new Tensor exporter.
-func New(url string) *Tensor {
-	if url == "" {
-		url = defaultPostURL
+func New(postURL string) *Tensor {
+	if postURL == "" {
+		postURL = defaultPostURL
 	}
 
-	return &Tensor{postURL: url}
+	return &Tensor{postURL: postURL}
 }
 
 // Export posts plan to a visualizer and returns link to the visualization plan page.
