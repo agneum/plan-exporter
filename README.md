@@ -40,7 +40,7 @@ On default, make install puts the compiled binary in `go/bin`.
     postgres=# \o | plan-exporter
     ```
     * You may wish to specify `--target [dalibo|depesz|tensor]` to customize your visualizer
-    * You may also specify `--post_url <URL>` if you are deploying one of these targets locally
+    * You may also specify `--post_url <URL>` if you are deploying one of these targets on-premise
 
 1. Run explain query:
     ```bash
