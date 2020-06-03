@@ -4,6 +4,7 @@ package visualizer
 import (
 	"fmt"
 
+	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer/dalibo"
 	"github.com/agneum/plan-exporter/visualizer/depesz"
@@ -11,17 +12,17 @@ import (
 )
 
 // New creates a new query plan exporter by visualizer type.
-func New(visualizer string, url string) (pgscanner.PlanExporter, error) {
-	switch visualizer {
+func New(conf config.Config) (pgscanner.PlanExporter, error) {
+	switch conf.Target {
 	case dalibo.VisualizerType:
-		return dalibo.New(url), nil
+		return dalibo.New(conf.PostURL), nil
 
 	case depesz.VisualizerType:
-		return depesz.New(url), nil
+		return depesz.New(conf.PostURL), nil
 
 	case tensor.VisualizerType:
-		return tensor.New(url), nil
+		return tensor.New(conf.PostURL), nil
 	}
 
-	return nil, fmt.Errorf("unknown visualizer given %q", visualizer)
+	return nil, fmt.Errorf("unknown visualizer given %q", conf.Target)
 }
