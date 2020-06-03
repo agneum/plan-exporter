@@ -3,11 +3,11 @@ package config
 
 // Config defines valid commandline args
 type Config struct {
-  Target string
-  PostURL string
+	Target  string
+	PostURL string
 }
 
 // New creates new config object
 func New() *Config {
-  return &Config{}
+	return &Config{}
 }

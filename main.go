@@ -18,9 +18,9 @@ func main() {
 
 	flag.Parse()
 
-  conf := config.New()
-  conf.Target = *target
-  conf.PostURL = *postURL
+	conf := config.New()
+	conf.Target = *target
+	conf.PostURL = *postURL
 
 	ctx := context.Background()
 	planner, err := visualizer.New(*conf)
