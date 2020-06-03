@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer"
 )
@@ -18,12 +17,12 @@ func main() {
 
 	flag.Parse()
 
-	conf := config.New()
-	conf.Target = *target
-	conf.PostURL = *postURL
+	vis := visualizer.New()
+	vis.Target = *target
+	vis.PostURL = *postURL
 
 	ctx := context.Background()
-	planner, err := visualizer.New(*conf)
+	planner, err := vis.BuildExporter()
 
 	if err != nil {
 		log.Fatalf("failed to init a query plan exporter: %v", err)
