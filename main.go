@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer"
 )
@@ -30,6 +31,6 @@ func main() {
 
 	fmt.Printf("Welcome to the query plan exporter. Target: %s.\n", *target)
 
-	pgsc := pgscanner.New(os.Stdin, os.Stdout, planner)
-	pgsc.Run(ctx)
+	pgScanner := pgscanner.New(os.Stdin, os.Stdout, planner)
+	pgScanner.Run(ctx)
 }

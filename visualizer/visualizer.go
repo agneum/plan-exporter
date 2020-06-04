@@ -4,6 +4,7 @@ package visualizer
 import (
 	"fmt"
 
+	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer/dalibo"
 	"github.com/agneum/plan-exporter/visualizer/depesz"
