@@ -12,17 +12,17 @@ import (
 )
 
 // New creates a new query plan exporter by visualizer type.
-func New(conf config.Config) (pgscanner.PlanExporter, error) {
-	switch conf.Target {
+func New(cfg *config.Config) (pgscanner.PlanExporter, error) {
+	switch cfg.Target {
 	case dalibo.VisualizerType:
-		return dalibo.New(conf.PostURL), nil
+		return dalibo.New(cfg.PostURL), nil
 
 	case depesz.VisualizerType:
-		return depesz.New(conf.PostURL), nil
+		return depesz.New(cfg.PostURL), nil
 
 	case tensor.VisualizerType:
-		return tensor.New(conf.PostURL), nil
+		return tensor.New(cfg.PostURL), nil
 	}
 
-	return nil, fmt.Errorf("unknown visualizer given %q", conf.Target)
+	return nil, fmt.Errorf("unknown visualizer given %q", cfg.Target)
 }

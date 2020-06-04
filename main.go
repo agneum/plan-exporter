@@ -18,12 +18,13 @@ func main() {
 
 	flag.Parse()
 
-	conf := config.New()
-	conf.Target = *target
-	conf.PostURL = *postURL
+	cfg := &config.Config{
+		Target:  *target,
+		PostURL: *postURL,
+	}
 
 	ctx := context.Background()
-	planner, err := visualizer.New(*conf)
+	planner, err := visualizer.New(cfg)
 
 	if err != nil {
 		log.Fatalf("failed to init a query plan exporter: %v", err)
@@ -31,6 +32,6 @@ func main() {
 
 	fmt.Printf("Welcome to the query plan exporter. Target: %s.\n", *target)
 
-	pgsc := pgscanner.New(os.Stdin, os.Stdout, planner)
-	pgsc.Run(ctx)
+	pgScanner := pgscanner.New(os.Stdin, os.Stdout, planner)
+	pgScanner.Run(ctx)
 }
