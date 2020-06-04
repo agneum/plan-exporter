@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
 	"github.com/agneum/plan-exporter/visualizer"
 )
