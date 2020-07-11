@@ -15,8 +15,8 @@ It's highly recommended installing a specific version of the `plan-exporter` ava
 To quickly install the tool on Linux, download and decompress the binary, use an example:
 
 ```bash
-wget https://github.com/agneum/plan-exporter/releases/download/v0.0.3/plan-exporter-0.0.3-linux-amd64.tar.gz
-tar -zxvf plan-exporter-0.0.3-linux-amd64.tar.gz
+wget https://github.com/agneum/plan-exporter/releases/download/v0.0.4/plan-exporter-0.0.4-linux-amd64.tar.gz
+tar -zxvf plan-exporter-0.0.4-linux-amd64.tar.gz
 sudo mv plan-exporter-*/plan-exporter /usr/local/bin/
 rm -rf ./plan-exporter-*
 ```
