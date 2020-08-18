@@ -18,7 +18,7 @@ func (m Mock) Export(s string) (string, error) {
 func TestSuccessfulPlanPosting(t *testing.T) {
 	buf := &bytes.Buffer{}
 
-	pgScanner := New(buf, buf, &Mock{url: "testURL"})
+	pgScanner := New(&Config{}, buf, buf, &Mock{url: "testURL"})
 	pgScanner.state.SetBuffer("non-empty buffer")
 	pgScanner.state.SetMode(ConfirmingMode)
 
@@ -27,7 +27,8 @@ func TestSuccessfulPlanPosting(t *testing.T) {
 	actualResult := buf.String()
 	expectedResult := `Posting to the visualizer...
 The plan has been posted successfully.
-URL: testURL`
+URL: testURL
+`
 
 	if actualResult != expectedResult {
 		t.Errorf("failed to post a plan. Given result: %s", actualResult)
@@ -45,7 +46,7 @@ URL: testURL`
 func TestPlanPostingWithEmptyBuffer(t *testing.T) {
 	buf := &bytes.Buffer{}
 
-	pgScanner := New(buf, buf, &Mock{url: "testURL"})
+	pgScanner := New(&Config{}, buf, buf, &Mock{url: "testURL"})
 	pgScanner.state.SetMode(ConfirmingMode)
 
 	pgScanner.postPlan()
@@ -70,7 +71,7 @@ no plan to export
 func TestPlanPostingWithWrongMode(t *testing.T) {
 	buf := &bytes.Buffer{}
 
-	pgScanner := New(buf, buf, &Mock{url: "testURL"})
+	pgScanner := New(&Config{}, buf, buf, &Mock{url: "testURL"})
 	pgScanner.state.SetBuffer("non-empty buffer")
 
 	pgScanner.postPlan()
@@ -95,7 +96,7 @@ cannot post because scanner is in invalid mode
 func TestPlanPostingWithFailedExport(t *testing.T) {
 	buf := &bytes.Buffer{}
 
-	pgScanner := New(buf, buf, &Mock{url: "testURL", err: errors.New("failed export")})
+	pgScanner := New(&Config{}, buf, buf, &Mock{url: "testURL", err: errors.New("failed export")})
 	pgScanner.state.SetBuffer("non-empty buffer")
 	pgScanner.state.SetMode(ConfirmingMode)
 

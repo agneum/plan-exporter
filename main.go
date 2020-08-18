@@ -14,17 +14,16 @@ import (
 
 func main() {
 	target := flag.String("target", "depesz", "type of an explain visualizer to export")
-	postURL := flag.String("post_url", "", "Absolute URL to HTML <form> element's `action`")
+	postURL := flag.String("post-url", "", "absolute URL to HTML <form> element's `action`")
+	autoConfirm := flag.Bool("auto-confirm", false, "send an execution plan automatically without additional confirmation")
 
 	flag.Parse()
 
-	cfg := &config.Config{
+	ctx := context.Background()
+	planner, err := visualizer.New(&config.Config{
 		Target:  *target,
 		PostURL: *postURL,
-	}
-
-	ctx := context.Background()
-	planner, err := visualizer.New(cfg)
+	})
 
 	if err != nil {
 		log.Fatalf("failed to init a query plan exporter: %v", err)
@@ -32,6 +31,10 @@ func main() {
 
 	fmt.Printf("Welcome to the query plan exporter. Target: %s.\n", *target)
 
-	pgScanner := pgscanner.New(os.Stdin, os.Stdout, planner)
+	scannerCfg := &pgscanner.Config{
+		AutoConfirm: *autoConfirm,
+	}
+
+	pgScanner := pgscanner.New(scannerCfg, os.Stdin, os.Stdout, planner)
 	pgScanner.Run(ctx)
 }
