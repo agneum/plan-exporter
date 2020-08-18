@@ -39,6 +39,8 @@ linters-settings:
   gocritic:
     enabled-tags:
       - performance
+  funlen:
+    lines: 70
 
 linters:
   enable-all: true
@@ -53,7 +55,6 @@ issues:
       linters:
         - dupl
         - gocyclo
-        - lll
         - errcheck
         - wsl
         - gomnd

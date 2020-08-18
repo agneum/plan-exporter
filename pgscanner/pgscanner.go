@@ -26,15 +26,22 @@ type PlanExporter interface {
 
 // PgScanner provides a psql output scanner.
 type PgScanner struct {
+	cfg          *Config
 	reader       io.Reader
 	writer       io.Writer
 	planExporter PlanExporter
 	state        ScannerState
 }
 
+// Config contains scanner configuration.
+type Config struct {
+	AutoConfirm bool
+}
+
 // New creates a new Postgres scanner.
-func New(reader io.Reader, writer io.Writer, planExporter PlanExporter) *PgScanner {
+func New(cfg *Config, reader io.Reader, writer io.Writer, planExporter PlanExporter) *PgScanner {
 	return &PgScanner{
+		cfg:          cfg,
 		reader:       reader,
 		writer:       writer,
 		planExporter: planExporter,
@@ -93,6 +100,12 @@ func (s *PgScanner) Run(ctx context.Context) {
 			explainLines = []string{}
 			s.state.mode = ConfirmingMode
 
+			if s.cfg.AutoConfirm {
+				s.postPlan()
+
+				continue
+			}
+
 			_, _ = fmt.Fprintln(s.writer, "Do you want to post this plan to the visualizer?\nSend '\\qecho Y' to confirm")
 
 			continue
@@ -122,5 +135,5 @@ func (s *PgScanner) postPlan() {
 		return
 	}
 
-	_, _ = fmt.Fprintf(s.writer, "The plan has been posted successfully.\nURL: %s", url)
+	_, _ = fmt.Fprintf(s.writer, "The plan has been posted successfully.\nURL: %s\n", url)
 }
