@@ -8,7 +8,7 @@ import (
 	"github.com/agneum/plan-exporter/client"
 )
 
-// visualizer constants
+// Visualizer constants.
 const (
 	VisualizerType = "dalibo"
 	defaultPostURL = "https://explain.dalibo.com/new"

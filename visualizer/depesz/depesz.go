@@ -8,7 +8,7 @@ import (
 	"github.com/agneum/plan-exporter/client"
 )
 
-// visualizer constants
+// Visualizer constants.
 const (
 	VisualizerType = "depesz"
 	defaultPostURL = "https://explain.depesz.com/"
