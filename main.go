@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
@@ -20,16 +21,18 @@ func main() {
 	flag.Parse()
 
 	ctx := context.Background()
-	planner, err := visualizer.New(&config.Config{
+	cfg := &config.Config{
 		Target:  *target,
 		PostURL: *postURL,
-	})
+	}
+
+	planner, err := visualizer.New(cfg)
 
 	if err != nil {
 		log.Fatalf("failed to init a query plan exporter: %v", err)
 	}
 
-	fmt.Printf("Welcome to the query plan exporter. Target: %s.\n", *target)
+	fmt.Println(generateWelcomeMessage(cfg, planner))
 
 	scannerCfg := &pgscanner.Config{
 		AutoConfirm: *autoConfirm,
@@ -37,4 +40,14 @@ func main() {
 
 	pgScanner := pgscanner.New(scannerCfg, os.Stdin, os.Stdout, planner)
 	pgScanner.Run(ctx)
+}
+
+func generateWelcomeMessage(cfg *config.Config, planner pgscanner.PlanExporter) string {
+	welcome := strings.Builder{}
+
+	welcome.WriteString("Welcome to the query plan exporter.")
+	welcome.WriteString(fmt.Sprintf("\nTarget: %s", cfg.Target))
+	welcome.WriteString(fmt.Sprintf("\nURL: %s", planner.Target()))
+
+	return welcome.String()
 }

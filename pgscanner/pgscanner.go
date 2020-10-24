@@ -22,6 +22,7 @@ const confirmationResponse = "Y"
 // PlanExporter defines the interface to post query plans.
 type PlanExporter interface {
 	Export(string) (string, error)
+	Target() string
 }
 
 // PgScanner provides a psql output scanner.

@@ -15,6 +15,10 @@ func (m Mock) Export(s string) (string, error) {
 	return m.url, m.err
 }
 
+func (m Mock) Target() string {
+	return m.url
+}
+
 func TestSuccessfulPlanPosting(t *testing.T) {
 	buf := &bytes.Buffer{}
 

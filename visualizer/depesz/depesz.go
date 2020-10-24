@@ -40,3 +40,8 @@ func (d *Depesz) Export(plan string) (string, error) {
 
 	return explainURL, nil
 }
+
+// Target returns a post URL.
+func (d *Depesz) Target() string {
+	return d.postURL
+}
