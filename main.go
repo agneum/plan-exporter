@@ -29,7 +29,7 @@ func main() {
 		log.Fatalf("failed to init a query plan exporter: %v", err)
 	}
 
-	fmt.Printf("Welcome to the query plan exporter. Target: %s.\n", *target)
+	fmt.Println(generateWelcomeMessage(planner))
 
 	scannerCfg := &pgscanner.Config{
 		AutoConfirm: *autoConfirm,
@@ -37,4 +37,8 @@ func main() {
 
 	pgScanner := pgscanner.New(scannerCfg, os.Stdin, os.Stdout, planner)
 	pgScanner.Run(ctx)
+}
+
+func generateWelcomeMessage(planner pgscanner.PlanExporter) string {
+	return fmt.Sprintf("Welcome to the query plan exporter.\nURL: %s", planner.Target())
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/agneum/plan-exporter/client"
 )
 
-// visualizer constants
+// Visualizer constants.
 const (
 	VisualizerType = "dalibo"
 	defaultPostURL = "https://explain.dalibo.com/new"
@@ -39,4 +39,9 @@ func (d *Dalibo) Export(plan string) (string, error) {
 	}
 
 	return explainURL, nil
+}
+
+// Target returns a post URL.
+func (d *Dalibo) Target() string {
+	return d.postURL
 }

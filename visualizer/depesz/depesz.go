@@ -8,7 +8,7 @@ import (
 	"github.com/agneum/plan-exporter/client"
 )
 
-// visualizer constants
+// Visualizer constants.
 const (
 	VisualizerType = "depesz"
 	defaultPostURL = "https://explain.depesz.com/"
@@ -39,4 +39,9 @@ func (d *Depesz) Export(plan string) (string, error) {
 	}
 
 	return explainURL, nil
+}
+
+// Target returns a post URL.
+func (d *Depesz) Target() string {
+	return d.postURL
 }
