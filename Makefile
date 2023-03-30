@@ -1,8 +1,27 @@
 .DEFAULT_GOAL = all
 
 BINARY = plan-exporter
-GOARCH = amd64
-GOOS = linux
+
+# Detect the OS
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    GOOS = linux
+endif
+ifeq ($(UNAME_S),Darwin)
+    GOOS = darwin
+endif
+
+# Detect the architecture
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_M),x86_64)
+    GOARCH = amd64
+endif
+ifeq ($(UNAME_M),arm64)
+    GOARCH = arm64
+endif
+ifeq ($(UNAME_M),aarch64)
+    GOARCH = arm64
+endif
 
 VERSION?=0.0.1
 BUILD_TIME?=$(shell date -u '+%Y%m%d-%H%M')
@@ -43,7 +62,7 @@ run-lint:
 lint: install-lint run-lint
 
 build:
-	${GOBUILD} -o bin/${BINARY} ./main.go
+	${GOBUILD} -o bin/${BINARY}-${GOOS}-${GOARCH} ./main.go
 
 clean:
 	-rm -f bin/*
@@ -57,5 +76,10 @@ test:
 test-race:
 	${GOTEST} -v -race ./...
 
-.PHONY: all clean build lint run-lint install-lint test test-race
+install: build
+	cp bin/${BINARY}-${GOOS}-${GOARCH} /usr/local/bin/${BINARY}
 
+uninstall:
+	rm -f /usr/local/bin/${BINARY}
+
+.PHONY: all clean build lint run-lint install-lint test test-race install uninstall
