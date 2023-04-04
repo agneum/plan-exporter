@@ -43,9 +43,37 @@ linters-settings:
     lines: 70
 
 linters:
-  enable-all: true
+  enable:
+    - deadcode
+    - depguard
+    - dupl
+    - errcheck
+    - gochecknoinits
+    - goconst
+    - gocritic
+    - goimports
+    - gomnd
+    - gosimple
+    - govet
+    - ineffassign
+    - lll
+    - megacheck
+    - misspell
+    - prealloc
+    - revive
+    - structcheck
+    - stylecheck
+    - unconvert
+    - varcheck
+    - unused
+    - unparam
+    - wsl
+  enable-all: false
   disable:
+    - gosec
+    - interfacer
     - gocyclo # currently unmaintained
+
   presets:
   fast: false
 
