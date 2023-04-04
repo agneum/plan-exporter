@@ -44,7 +44,6 @@ linters-settings:
 
 linters:
   enable:
-    - deadcode
     - depguard
     - dupl
     - errcheck
@@ -61,10 +60,8 @@ linters:
     - misspell
     - prealloc
     - revive
-    - structcheck
     - stylecheck
     - unconvert
-    - varcheck
     - unused
     - unparam
     - wsl

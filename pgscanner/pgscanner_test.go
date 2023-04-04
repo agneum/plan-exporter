@@ -11,7 +11,7 @@ type Mock struct {
 	err error
 }
 
-func (m Mock) Export(s string) (string, error) {
+func (m Mock) Export(_ string) (string, error) {
 	return m.url, m.err
 }
 
