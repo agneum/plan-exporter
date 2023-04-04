@@ -54,7 +54,7 @@ all: clean build
 
 # Install the linter to $GOPATH/bin which is expected to be in $PATH
 install-lint:
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${GOPATH}/bin v1.23.8
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${GOPATH}/bin v1.52.2
 
 run-lint:
 	golangci-lint --config .golangci.yml run
