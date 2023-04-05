@@ -121,20 +121,20 @@ func (s *PgScanner) postPlan() {
 	defer s.state.Reset()
 
 	if !s.state.IsMode(ConfirmingMode) {
-		_, _ = fmt.Fprintf(s.writer, ("cannot post because scanner is in invalid mode\n"))
+		_, _ = fmt.Fprintf(s.writer, "cannot post because scanner is in invalid mode\n")
 		return
 	}
 
 	if s.state.buffer == "" {
-		_, _ = fmt.Fprintf(s.writer, ("no plan to export\n"))
+		_, _ = fmt.Fprintf(s.writer, "no plan to export\n")
 		return
 	}
 
-	url, err := s.planExporter.Export(s.state.buffer)
+	exportResponse, err := s.planExporter.Export(s.state.buffer)
 	if err != nil {
 		_, _ = fmt.Fprintf(s.writer, "Failed to post query plan: %s.\n", err)
 		return
 	}
 
-	_, _ = fmt.Fprintf(s.writer, "The plan has been posted successfully.\nURL: %s\n", url)
+	_, _ = fmt.Fprintf(s.writer, "%s\n", exportResponse)
 }

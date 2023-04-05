@@ -5,4 +5,5 @@ package config
 type Config struct {
 	Target  string
 	PostURL string
+	Mode    string
 }

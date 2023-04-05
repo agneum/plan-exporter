@@ -6,6 +6,7 @@ import (
 
 	"github.com/agneum/plan-exporter/config"
 	"github.com/agneum/plan-exporter/pgscanner"
+	"github.com/agneum/plan-exporter/visualizer/chatgpt"
 	"github.com/agneum/plan-exporter/visualizer/dalibo"
 	"github.com/agneum/plan-exporter/visualizer/depesz"
 	"github.com/agneum/plan-exporter/visualizer/tensor"
@@ -22,6 +23,9 @@ func New(cfg *config.Config) (pgscanner.PlanExporter, error) {
 
 	case tensor.VisualizerType:
 		return tensor.New(cfg.PostURL), nil
+
+	case chatgpt.VisualizerType:
+		return chatgpt.New(cfg.Mode), nil
 	}
 
 	return nil, fmt.Errorf("unknown visualizer given %q", cfg.Target)

@@ -17,6 +17,7 @@ func main() {
 	target := flag.String("target", "depesz", "type of an explain visualizer to export")
 	postURL := flag.String("post-url", "", "absolute URL to HTML <form> element's `action`")
 	autoConfirm := flag.Bool("auto-confirm", false, "send an execution plan automatically without additional confirmation")
+	mode := flag.String("mode", "explain", "visualizer mode: opt, explain`")
 
 	flag.Parse()
 
@@ -24,6 +25,7 @@ func main() {
 	planner, err := visualizer.New(&config.Config{
 		Target:  *target,
 		PostURL: *postURL,
+		Mode:    *mode,
 	})
 
 	if err != nil {
