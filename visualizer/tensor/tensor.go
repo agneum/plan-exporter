@@ -12,7 +12,7 @@ import (
 const (
 	VisualizerType = "tensor"
 	defaultPostURL = "https://explain.tensor.ru/explain"
-	planKey        = "explain"
+	planKey        = "plan"
 )
 
 // Tensor defines a query plan exporter for the Tensor visualizer.

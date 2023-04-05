@@ -3,11 +3,12 @@ package client
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// MakeRequest performs the request and returns the redirected request URL.
+// MakeRequest performs request and returns the redirected request URL.
 func MakeRequest(targetURL string, formVal url.Values) (string, error) {
 	response, err := http.PostForm(targetURL, formVal) // nolint:gosec
 	if err != nil {
@@ -19,4 +20,14 @@ func MakeRequest(targetURL string, formVal url.Values) (string, error) {
 	}
 
 	return response.Request.URL.String(), nil
+}
+
+// MakeRequestWithBody performs request and returns response.
+func MakeRequestWithBody(targetURL string, formVal url.Values) (io.ReadCloser, error) {
+	response, err := http.PostForm(targetURL, formVal) // nolint:gosec
+	if err != nil {
+		return nil, fmt.Errorf("failed to post form: %w", err)
+	}
+
+	return response.Body, nil
 }
